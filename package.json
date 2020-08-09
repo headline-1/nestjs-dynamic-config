@@ -1,6 +1,6 @@
 {
   "name": "nestjs-dynamic-config",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Nest.js Dynamic Configuration Module",
   "main": "dist/index.js",
   "repository": "git@github.com:headline-1/nestjs-dynamic-config.git",
