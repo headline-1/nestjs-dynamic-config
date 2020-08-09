@@ -1,0 +1,51 @@
+module.exports = {
+  root: true,
+  parser: '@typescript-eslint/parser',
+  plugins: [
+    '@typescript-eslint',
+  ],
+  extends: [
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:import/typescript',
+  ],
+  parserOptions: {
+    ecmaVersion: 2018,
+    sourceType: 'module',
+  },
+  rules: {
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': ['warn', {
+      allowArgumentsExplicitlyTypedAsAny: true,
+    }],
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    '@typescript-eslint/no-use-before-define': 0,
+    '@typescript-eslint/no-object-literal-type-assertion': 0,
+    '@typescript-eslint/prefer-interface': 0,
+    '@typescript-eslint/explicit-member-accessibility': 0,
+    '@typescript-eslint/no-empty-interface': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-parameter-properties': 0,
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/adjacent-overload-signatures': 0,
+    'no-use-before-define': 0,
+    'no-multiple-empty-lines': ['error', { 'max': 1, 'maxEOF': 1 }],
+    'object-curly-spacing': ['error', 'always'],
+    'import/order': ['error', {
+      'groups': [
+        'builtin',
+        'external',
+        'internal',
+        'parent',
+        'sibling',
+        'index',
+      ],
+    }],
+    'semi': ['error'],
+    'quotes': [2, 'single', { 'avoidEscape': false }],
+    'comma-spacing': ['error', { 'before': false, 'after': true }],
+  },
+};

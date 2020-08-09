@@ -1,0 +1,56 @@
+name: Pull Request
+
+on:
+  pull_request:
+    branches:
+    - master
+    - next
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with: { node-version: 12 }
+    - name: Yarn cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - run: yarn install --frozen-lockfile
+    - run: yarn audit --groups dependencies
+    - run: yarn build
+    - name: Upload built artifacts
+      uses: actions/upload-artifact@v2-preview
+      with: { name: dist, path: ./dist }
+
+  test:
+    name: Test
+    needs: build
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: [8, 10, 12]
+        os: [ubuntu-latest]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Yarn cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.cache/yarn
+        key: ${{ runner.os }}-yarn-${{ hashFiles('yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - run: yarn install --frozen-lockfile
+    - name: Download built artifacts
+      uses: actions/download-artifact@v1
+      with: { name: dist, path: ./dist/ }
+    - run: yarn test
